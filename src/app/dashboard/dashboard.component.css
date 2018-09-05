@@ -1,0 +1,44 @@
+.movieDivision{
+    border: 5px solid;
+    padding: 15px;
+    height: 230px;
+    background-image:url(https://image.freepik.com/free-vector/dark-blue-blurred-background_1034-589.jpg) ;
+    background-repeat:no-repeat;
+    background-size:cover;
+    color: #fff;
+    font-weight: bolder;
+    border-radius: 10px
+}
+.movieDivision:hover{
+    cursor: pointer;
+    box-shadow: inset 3px 4px 5px #fff;
+}
+.movieDivision .movieImg{
+    height: calc(100% - 56px);
+    background-color: #fff;
+    margin-bottom: 4px;
+}
+
+.stars-outer {
+    display: inline-block;
+    position: relative;
+    font-family: FontAwesome;
+}
+
+.stars-outer::before {
+    content: "\f006 \f006 \f006 \f006 \f006";
+}
+
+.stars-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    /* width: 0; */
+}
+
+.stars-inner::before {
+    content: "\f005 \f005 \f005 \f005 \f005";
+    color: #f8ce0b;
+}

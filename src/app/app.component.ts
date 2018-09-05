@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MovieService } from './app.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Popcorn';
+  title = 'Cinema feedback app';
+
 }
