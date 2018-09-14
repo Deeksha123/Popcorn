@@ -1,7 +1,7 @@
 import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule, Response, RequestOptions } from '@angular/http';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from "@angular/forms";
 import { RouterModule, Routes } from '@angular/router';
 
 import { MovieService } from './app.service';
@@ -29,7 +29,7 @@ import { AppRoutingModule } from './app-routing.module';
   imports: [
     BrowserModule,
     HttpModule,
-    FormsModule,
+    ReactiveFormsModule,
     RouterModule,
     AppRoutingModule
   ],

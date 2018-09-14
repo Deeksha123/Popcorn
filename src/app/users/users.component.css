@@ -1,0 +1,46 @@
+#movieLogo img{
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    background-size: cover;
+}
+
+.addCommentTextarea{
+    height: 190px;
+}
+
+.addCommentBox{
+    height: 65%;
+}
+
+.commentsContainer{
+    padding: 17px;
+}
+.prevComment{
+    border-radius: 10px;
+    background-color: #d3d3d3;
+    padding: 10px;
+}
+
+.addCommentTextarea .addComntBtn{
+    margin-top: 5px;
+}
+
+.editDelControl i{
+    float: right;
+    font-size: 20px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.editDelControl i:hover{
+    color: burlywood;
+}
+
+#movieLogo .movieName{
+    display: block;
+    margin-left: 15px;
+}
+.addCommentTextarea form{
+    height: 100%;
+}

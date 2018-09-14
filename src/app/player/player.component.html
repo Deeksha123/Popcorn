@@ -1,3 +1,28 @@
-<p>
-  player works!
-</p>
+<div class="playerView col-xs-8 col-sm-8 col-md-8 col-lg-8">
+  <div id="displayMediaClip">
+    <video src="currentSelection.src" height="436px" width="100%"></video>
+    <div class="movieName"><h3>{{currentSelection.name}}</h3></div>
+    <div class="movieRating">{{currentSelection.rating}}</div>
+  </div>
+
+  <hr>
+
+  <!-- Movie desciption Area starts-->
+  
+  <a class="" data-toggle="collapse" href="#descriptionCard" role="button" aria-expanded="false" aria-controls="descriptionCard">Show description</a>
+  <div class="col">
+    <div class="collapse multi-collapse" id="descriptionCard">
+      <div class="card card-body">
+        {{currentSelection.description}}
+      </div>
+    </div>
+  </div>
+
+  <!-- Movie desciption Area ends-->
+
+  <app-users></app-users>
+</div>
+
+<div class="galleryView col-xs-4 col-sm-4 col-md-4 col-lg-4">
+    <gallery-component></gallery-component>
+</div>

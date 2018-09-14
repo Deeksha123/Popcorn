@@ -1,3 +1,36 @@
-<div class="container">
-  
+<div class="">
+
+    <div id="movieLogo" class="col-xs-3">
+        <img [src]="currentClipCommentObj.img" alt="" class="movieLogoImg">
+        <span class="movieName"><h4>{{selectedMovie.name}}</h4></span>
+    </div>
+
+    <div class="addCommentTextarea col-xs-9">
+        <form [formGroup]="commentForm" (submit)="addNewComment()">
+            <label class="col-xs-5">How much do you like it</label>
+            <input class="col-xs-2" formControlName="rating" [(ngModel)]="userComment.rating" placeholder="0-10" type="number" min="0" max="10">
+            <input class="addCommentBox col-xs-12" formControlName="commentBox" [(ngModel)]="userComment.commentBox" placeholder="Enter comments">
+            <button class="col-xs-3 col-xs-offset-9 btn-primary btn addComntBtn" [disabled]="!commentForm.valid">Add Comment</button>
+        </form>
+        <!-- <input  [(ngModel)]="newComment"> -->
+        
+    </div>
+    <div class="commentsContainer col-xs-9 col-xs-offset-3">
+        <div *ngFor="let review of currentMovieUserInfo" class="card-block well bg-secondary text-white col-xs-12">
+            <div class="card-body col-xs-12">
+                <div class="col-xs-3">
+                    <i class="glyphicon glyphicon-user"></i>
+                    <label>{{review.user_id}}</label>
+                    <span>Rating: {{review.user_rating}}</span>
+                    <label>Commented on: {{review.comment_date}}</label>
+                </div>
+                
+                <div class="col-xs-9 editDelControl">
+                    <div class="prevComment">{{review.comment}}</div>
+                    <!-- <i class="glyphicon glyphicon-edit" (click)="editComment()" *ngIf="review.loggedIn"></i>-->
+                    <i class="glyphicon glyphicon-trash" (click)="deleteComment()" *ngIf="review.loggedIn"></i> 
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MovieService } from '../app.service';
 import { BrowserModule, DomSanitizer } from "@angular/platform-browser";
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,10 +10,11 @@ import { RouterModule } from '@angular/router';
 })
 export class DashboardComponent implements OnInit{
 
-  constructor(private movieService: MovieService, private sanitizer: DomSanitizer) { }
+  constructor(private movieService: MovieService, private sanitizer: DomSanitizer, private router: Router) { }
 
   allMovies : any;
   allMoviesrc = [];
+  currentSelectedMovie = "Dhadak_001";
 
   ngOnInit() {
     this.allMovies = this.movieService.getAllMovies();
@@ -54,7 +55,13 @@ export class DashboardComponent implements OnInit{
     
   }
 
-  selectMovie(idx : number) {
-    console.log(idx);
+  selectMovie(idx : string) {
+
+    let currentMovie;
+    this.currentSelectedMovie = idx;
+    currentMovie = this.movieService.getSelectedMovieData( this.currentSelectedMovie );
+    console.log( currentMovie )
+    this.router.navigate(['player']);
+
   }
  }

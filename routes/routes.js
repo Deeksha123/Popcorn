@@ -15,7 +15,14 @@ var appRouter = function (app) {
         res.header('Access-Control-Allow-Origin', '*');
         res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
         res.status(200).send(data);
+        res.end();
     });
+
+    app.get("/user/:id", function (req, res) {
+        
+    });
+
+    
 }
   
 module.exports = appRouter;

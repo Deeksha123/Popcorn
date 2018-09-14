@@ -1,17 +1,17 @@
-<form #ngForm="loginForm" (onSubmit)="success()" >
+<form [formGroup]="loginForm" (onSubmit)="success(loginForm)" >
   <div class="imgcontainer">
     <img src="" alt="" class="avatar">
   </div>
 
   <div class="container login-Container">
     <!-- <label for="uname" class="label"><b>Username</b></label> -->
-    <input type="text" placeholder="Enter Username" name="uname" required>
+    <input type="text" placeholder="Enter Username" formControlName="userName">
 
     <!-- <label for="psw" class="label"><b>Password</b></label> -->
-    <input type="password" placeholder="Enter Password" name="psw" required>
+    <input type="password" placeholder="Enter Password" formControlName="password">
         
-    <button type="submit" routerLink="/dashboard">Login</button>
-    <button type="button" class="cancelbtn">Register</button>
+    <button type="submit" [routerLink]="['/dashboard']" class="btn">Login</button>
+    <button type="button" class="cancelbtn" class="btn">Register</button>
   </div>
 
 </form>
