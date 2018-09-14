@@ -16,7 +16,7 @@ export class GalleryComponent implements OnInit {
 
   ngOnInit() {
     this.allMovies = this.movieService.getAllMovies();
-    this.checkDomState()
+    this.checkDomState();
   }
 
   checkDomState() {
@@ -46,7 +46,6 @@ export class GalleryComponent implements OnInit {
 
   selectMovie(val: string) {
     let movieSelectedFromGallery = this.movieService.getSelectedMovieData( val );
-    console.log("movieSelectedFromGallery_", movieSelectedFromGallery);
   }
 
 }
