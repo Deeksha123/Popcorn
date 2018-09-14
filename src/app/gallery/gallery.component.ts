@@ -16,7 +16,7 @@ export class GalleryComponent implements OnInit {
 
   ngOnInit() {
     this.allMovies = this.movieService.getAllMovies();
-    this.checkDomState();
+    this.checkDomState()
   }
 
   checkDomState() {
