@@ -35,14 +35,28 @@ export class MovieService{
   //   )
   // }
 
-  fetchData() {
-    return this.http.get("http://10.240.0.77:3000/user").subscribe(
-      (data) => console.log(data["_body"]),
+  registerNewUser( newUser , successHandler) {
+    this.http.post("http://localhost:3000/register", newUser).subscribe(
+      (data) => {
+        console.log("success request________")
+        successHandler( data )
+      },
       (error) => {
         console.log("Error in Api");
       }
-    )
+    );
   }
+
+  
+
+  // fetchData() {
+  //   return this.http.get("http://10.240.0.77:3000/user").subscribe(
+  //     (data) => console.log(data["_body"]),
+  //     (error) => {
+  //       console.log("Error in Api");
+  //     }
+  //   )
+  // }
 
   // static data
   getSelectedMovieData( clipId ) {

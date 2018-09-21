@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 
 import { MovieService } from '../app.service';
@@ -13,6 +13,8 @@ export class GalleryComponent implements OnInit {
   allMovies : any;
 
   constructor(private movieService: MovieService, private router: Router) { }
+
+  @Output() movieEventTriggered = new EventEmitter();
 
   ngOnInit() {
     this.allMovies = this.movieService.getAllMovies();
@@ -30,7 +32,7 @@ export class GalleryComponent implements OnInit {
   }
 
   showStarRatings() {
-    const starTotal = 5;
+    const starTotal = 10;
     let ratings = {}, idx = 0;
     for(let i in this.allMovies) {
       ratings["movie_"+ idx] = this.allMovies[i].rating;
@@ -46,6 +48,7 @@ export class GalleryComponent implements OnInit {
 
   selectMovie(val: string) {
     let movieSelectedFromGallery = this.movieService.getSelectedMovieData( val );
+    this.movieEventTriggered.emit( movieSelectedFromGallery );
   }
 
 }

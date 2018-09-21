@@ -21,7 +21,7 @@
   }
    
   .stars-outer::before {
-    content: "\f006 \f006 \f006 \f006 \f006";
+    content: "\f006 \f006 \f006 \f006 \f006 \f006 \f006 \f006 \f006 \f006";
   }
    
   .stars-inner {

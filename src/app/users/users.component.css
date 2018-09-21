@@ -20,6 +20,7 @@
     border-radius: 10px;
     background-color: #d3d3d3;
     padding: 10px;
+    word-wrap: break-word;
 }
 
 .addCommentTextarea .addComntBtn{

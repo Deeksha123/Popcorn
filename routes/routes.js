@@ -1,27 +1,19 @@
-var faker = require("faker");
+var loginCollection = require("../database/serve").signIn;
+var registerCollection = require("../database/serve").signUp;
 
 var appRouter = function (app) {
-    app.get("/", function(req, res) {
-        res.status(200).send("Welcome to our restful API");
+
+    app.get("/", (req, res) => {
+        res.send("Hello World");
     });
 
-    app.get("/user", function (req, res) {
-        var data = ({
-            firstName: faker.name.firstName(),
-            lastName: faker.name.lastName(),
-            username: faker.internet.userName(),
-            email: faker.internet.email()
-        });
-        res.header('Access-Control-Allow-Origin', '*');
-        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
-        res.status(200).send(data);
-        res.end();
-    });
-
-    app.get("/user/:id", function (req, res) {
+    app.post('/register', (req, res) => {
+        console.log("request body is ", req.body);
         
+        var userToAdd = new registerCollection (req.body);
+        userToAdd.save();
+        res.send(200, req.body)
     });
-
     
 }
   

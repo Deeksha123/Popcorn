@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 import { MovieService } from '../app.service';
@@ -9,6 +10,8 @@ import { MovieService } from '../app.service';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
+
+  @Input()
 
   commentForm: FormGroup;
 
@@ -22,21 +25,41 @@ export class UsersComponent implements OnInit {
 
   //To do from service
   currentLoggedInUser = "Deeksha";
+  paramsSub;
 
-  constructor(public movieService : MovieService, builder: FormBuilder) {
+  constructor(
+      public movieService : MovieService, 
+      builder: FormBuilder,
+      private route: ActivatedRoute
+    ) {
     this.commentForm = builder.group({
       commentBox: ['', Validators.required],
       rating: ''
-    })
+    });
+
+    this.paramsSub = route.params.subscribe(params => {
+      let id = params['id'];
+      
+      if(id != null) { 
+        this.getCurrentMovieCommentsData( id )
+      }
+      
+    });
+
   }
 
   ngOnInit() {
       this.movieService.fetchData();
-      this.getCurrentMovieCommentsData();
+      this.getCurrentMovieCommentsData( undefined );
   }
 
-  getCurrentMovieCommentsData () {
-    let currClipId = this.movieService.currSelectedMovie["id"];
+  getCurrentMovieCommentsData ( id ) {
+    let currClipId;
+    if(id == undefined) {
+      currClipId = this.movieService.currSelectedMovie["id"];
+    } else {
+      currClipId = id;;
+    }
     this.currentMovieUserInfo = this.movieService.getcurrentMovieComments( currClipId, undefined );
     this.currentClipCommentObj = this.movieService.getCurrMovieObj;
     this.selectedMovie = this.movieService.getSelectedMovieData( currClipId );

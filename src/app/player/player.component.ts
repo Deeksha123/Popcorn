@@ -1,4 +1,5 @@
-import { Component , OnInit } from '@angular/core';
+import { Component , OnInit, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../app.service';
 
 @Component({
@@ -8,16 +9,28 @@ import { MovieService } from '../app.service';
 })
 export class PlayerComponent implements OnInit{
 
-  currentSelection = this.movieService.getSelectedMovieData( this.movieService.currSelectedMovie );
+  @Input()
 
-  constructor(private movieService: MovieService) { }
+  currentSelection;
+  paramsSub;
+  
+  constructor(
+    private movieService: MovieService,
+    private route: ActivatedRoute
+  ) {
+    this.paramsSub = route.params.subscribe(params => {
+      let id = params['id'];
+      
+      if(id == null) { 
+        this.currentSelection = this.movieService.getSelectedMovieData( this.movieService.currSelectedMovie );
+      } else { 
+        this.currentSelection = this.movieService.getSelectedMovieData( id );
+      }
 
-  ngOnInit() {
-    this.getCurrentSelectedMovie();
+    });
   }
 
-  getCurrentSelectedMovie() {
-    var currentMovie;
-  }
+  ngOnInit() {}
+
 
 }

@@ -1,18 +1,31 @@
 var mongoose = require("mongoose");
-mongoose.connect('mongodb://Deekshaa007:<dbpassword>@ds149252.mlab.com:49252/pippop');
-var movieSchema = mongoose.Schema({
 
-        // name: { type: String, required: true, },
-        // releaseDate: { type: String, required: true },
-        // ratings: { type: Number, required: true },
-        // director: { type: String, required: true },
-        // cast: { type: String, required: true },
-        // posterImage: { type: String, required: true }
+mongoose.connect('mongodb://deeksha:awasthi100@ds149252.mlab.com:49252/pippop', { useNewUrlParser: true });
+
+var loginSchema = mongoose.Schema({
+
+        email: { type: String, required: true },
+        password: { type: String, required: true }
 
     }, { 
-        collection: 'movie_details' 
-    }); 
+        collection: 'login_collection' 
+    }
+);
 
-var moviesCollection = mongoose.model('movies', movieSchema);
+var registerSchema = mongoose.Schema({
 
-module.exports = moviesCollection;
+        firstName: { type: String, required: true },
+        lastName: { type: String, required: true },
+        email: { type: String, required: true },
+        password: { type: String, required: true }
+
+    }, { 
+        collection: 'register_collection' 
+    }
+)
+
+var loginCollection = mongoose.model('login', loginSchema);
+
+var registerCollection = mongoose.model('register',registerSchema);
+
+module.exports = {"signIn": loginCollection, "signUp": registerCollection};

@@ -1,17 +1,17 @@
-<form [formGroup]="loginForm" (onSubmit)="success(loginForm)" >
+<form [formGroup]="loginForm">
   <div class="imgcontainer">
     <img src="" alt="" class="avatar">
   </div>
 
   <div class="container login-Container">
     <!-- <label for="uname" class="label"><b>Username</b></label> -->
-    <input type="text" placeholder="Enter Username" formControlName="userName">
+    <input type="text" placeholder="Enter email" formControlName="email">
 
     <!-- <label for="psw" class="label"><b>Password</b></label> -->
     <input type="password" placeholder="Enter Password" formControlName="password">
         
-    <button type="submit" [routerLink]="['/dashboard']" class="btn">Login</button>
-    <button type="button" class="cancelbtn" class="btn">Register</button>
+    <button type="submit" class="btn" (click)="loginBtnClickHandler()">Login</button>
+    <button type="button" class="registerbtn btn" [routerLink]="['/register']">Register</button>
   </div>
 
 </form>
