@@ -3,16 +3,24 @@ var registerCollection = require("../database/serve").signUp;
 
 var appRouter = function (app) {
 
-    app.get("/", (req, res) => {
+    app.get("/", ( req, res ) => {
         res.send("Hello World");
     });
 
-    app.post('/register', (req, res) => {
-        console.log("request body is ", req.body);
-        
+    app.post('/register', ( req, res ) => {
+        var localObj = req.body;
+        localObj.loggedIn = false;
+        req.body = localObj;
         var userToAdd = new registerCollection (req.body);
         userToAdd.save();
-        res.send(200, req.body)
+        res.status(200).send(req.body);
+    });
+
+    app.post('/login', ( req, res ) => {
+        var userAuth = new loginCollection (req.body);
+        // userAuth.find( { 'email': req.body.email }, function(err, docs) {
+        //     console.log("docs found", docs);
+        // })
     });
     
 }

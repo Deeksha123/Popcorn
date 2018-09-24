@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { MovieService } from '../app.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -14,7 +16,7 @@ export class LoginComponent implements OnInit {
     password : new FormControl("", Validators.required)
   });
 
-  constructor(private router: Router) { }
+  constructor( private router: Router, private movieService: MovieService) { }
 
   ngOnInit() {
     
@@ -22,7 +24,8 @@ export class LoginComponent implements OnInit {
 
   loginBtnClickHandler() {
     var loginObj = this.loginForm.value;
-    
+    this.movieService.authenticateUser( loginObj );
+    console.log(loginObj);
 
   }
 

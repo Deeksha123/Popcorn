@@ -49,7 +49,6 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit() {
-      this.movieService.fetchData();
       this.getCurrentMovieCommentsData( undefined );
   }
 

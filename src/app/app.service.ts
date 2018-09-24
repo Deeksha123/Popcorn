@@ -36,27 +36,26 @@ export class MovieService{
   // }
 
   registerNewUser( newUser , successHandler) {
-    this.http.post("http://localhost:3000/register", newUser).subscribe(
+    this.http.post( "http://localhost:3000/register", newUser ).subscribe(
       (data) => {
-        console.log("success request________")
         successHandler( data )
       },
       (error) => {
-        console.log("Error in Api");
+        console.log("Error in Api", error);
       }
     );
   }
 
-  
-
-  // fetchData() {
-  //   return this.http.get("http://10.240.0.77:3000/user").subscribe(
-  //     (data) => console.log(data["_body"]),
-  //     (error) => {
-  //       console.log("Error in Api");
-  //     }
-  //   )
-  // }
+  authenticateUser( user ) {
+    this.http.post( "http://localhost:3000/login", user ).subscribe(
+      (data) => {
+        console.log("User is authenticated. ", data);
+      },
+      (err) => {
+        console.log("User does not exist. ", err);
+      }
+    )
+  }
 
   // static data
   getSelectedMovieData( clipId ) {
