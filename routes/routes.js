@@ -17,7 +17,7 @@ var appRouter = function (app) {
     });
 
     app.post('/login', ( req, res ) => {
-        var userAuth = new loginCollection (req.body);
+        var userAuth = new registerCollection (req.body);
         // userAuth.find( { 'email': req.body.email }, function(err, docs) {
         //     console.log("docs found", docs);
         // })
