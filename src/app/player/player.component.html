@@ -2,7 +2,7 @@
   <div id="displayMediaClip">
     <video [src]="currentSelection.src" height="436px" width="100%"></video>
     <div class="movieName"><h3>{{currentSelection.name}}</h3></div>
-    <div class="movieRating">{{currentSelection.rating}}</div>
+    <div class="movieRating">IMDB: {{currentSelection.IMDB}}</div>
   </div>
 
   <hr>
@@ -14,6 +14,8 @@
     <div class="collapse multi-collapse" id="descriptionCard">
       <div class="card card-body">
         {{currentSelection.description}}
+        Release on: {{currentSelection.release_date}}
+        {{currentSelection.genure}}
       </div>
     </div>
   </div>

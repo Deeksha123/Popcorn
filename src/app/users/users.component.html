@@ -1,5 +1,5 @@
 <div class="">
-    <router-outlet></router-outlet>
+    <!-- <router-outlet></router-outlet> -->
     
     <div id="movieLogo" class="col-xs-3">
         <img [src]="currentClipCommentObj.img" alt="" class="movieLogoImg">
@@ -21,7 +21,7 @@
             <div class="card-body col-xs-12">
                 <div class="col-xs-3">
                     <i class="glyphicon glyphicon-user"></i>
-                    <label>{{review.user_id}}</label>
+                    <label>{{review.name}}</label>
                     <span>Rating: {{review.user_rating}}</span>
                     <label>Commented on: {{review.comment_date}}</label>
                 </div>

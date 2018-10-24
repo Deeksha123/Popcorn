@@ -1,7 +1,7 @@
 
 <div id="gridContainer" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-  <div class="movieDivision col-xs-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let movie of allMovies; let i = index" (click)="selectMovie(movie.id)">
+  <div class="movieDivision col-xs-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let movie of allMovies; let i = index" (click)="selectMovie(movie._id)">
     <div class="movieImg">
       <!-- <img src="" alt="" class="url"> -->
       <iframe width="100%" height="100%" src="">
@@ -9,9 +9,9 @@
       </iframe>
     </div>
     <div class="movieTitle">{{movie.name}}</div>
-    <div class="movieTitle">{{movie.img}}</div>
-    <div class="movieTitle">{{movie.release}}</div>
-    <div class="movie_{{i}}">
+    <!-- <div class="movieTitle">{{movie.IMDB}}</div> -->
+    <div class="movieTitle">{{movie.release_date}}</div>
+    <div class="movie_{{movie._id}}">
         <div class="stars-outer">
             <div class="stars-inner"></div>
         </div>

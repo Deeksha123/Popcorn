@@ -1,5 +1,5 @@
 import { Component , OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+// import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../app.service';
 
 @Component({
@@ -12,25 +12,33 @@ export class PlayerComponent implements OnInit{
   @Input()
 
   currentSelection;
-  paramsSub;
+  // paramsSub;
   
   constructor(
-    private movieService: MovieService,
-    private route: ActivatedRoute
+    private movieService: MovieService
+    // private route: ActivatedRoute
   ) {
-    this.paramsSub = route.params.subscribe(params => {
-      let id = params['id'];
+    // this.paramsSub = route.params.subscribe(params => {
+    //   let id = params['id'];
       
-      if(id == null) { 
-        this.currentSelection = this.movieService.getSelectedMovieData( this.movieService.currSelectedMovie );
-      } else { 
-        this.currentSelection = this.movieService.getSelectedMovieData( id );
-      }
+    //   if(id == null) { 
+    //     this.currentSelection = this.movieService.getSelectedMovieData( this.movieService.currSelectedClipId, function(){  } );
+    //   } else { 
+    //     this.currentSelection = this.movieService.getSelectedMovieData( id, function(){  } );
+    //   }
 
-    });
+    // });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.loadSelectedMovie();
+  }
+
+  loadSelectedMovie() {
+
+    this.currentSelection = this.movieService.currSelectedMovie;
+
+  }
 
 
 }

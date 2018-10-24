@@ -24,8 +24,8 @@ export class UsersComponent implements OnInit {
   currentMovieUserComments = [];
 
   //To do from service
-  currentLoggedInUser = "Deeksha";
-  paramsSub;
+  currentLoggedInUser = this.movieService.currentLoggedInUser;
+  // paramsSub;
 
   constructor(
       public movieService : MovieService, 
@@ -37,31 +37,43 @@ export class UsersComponent implements OnInit {
       rating: ''
     });
 
-    this.paramsSub = route.params.subscribe(params => {
-      let id = params['id'];
+    // this.paramsSub = route.params.subscribe(params => {
+    //   let id = params['id'];
       
-      if(id != null) { 
-        this.getCurrentMovieCommentsData( id )
-      }
+    //   if(id != null) { 
+    //     this.getCurrentMovieCommentsData( id )
+    //   }
       
-    });
+    // });
+
+
 
   }
 
   ngOnInit() {
-      this.getCurrentMovieCommentsData( undefined );
+    this.loadPage();
+    this.getCurrentMovieCommentsData();
   }
 
-  getCurrentMovieCommentsData ( id ) {
-    let currClipId;
-    if(id == undefined) {
-      currClipId = this.movieService.currSelectedMovie["id"];
-    } else {
-      currClipId = id;;
-    }
-    this.currentMovieUserInfo = this.movieService.getcurrentMovieComments( currClipId, undefined );
-    this.currentClipCommentObj = this.movieService.getCurrMovieObj;
-    this.selectedMovie = this.movieService.getSelectedMovieData( currClipId );
+  loadPage() {
+    
+  }
+
+  getCurrentMovieCommentsData () {
+    let self = this;
+    let movieId = this.movieService.currSelectedClipId;
+    this.selectedMovie = this.movieService.currSelectedMovie;
+    // if(id == undefined) {
+    //   currClipId = this.movieService.currSelectedMovie["id"];
+    // } else {
+    //   currClipId = id;
+    // }
+    this.movieService.getcurrentMovieComments( movieId, undefined, function( commentObj ) {
+      
+      self.currentMovieUserInfo = commentObj.user_info;
+
+    });
+    // this.currentClipCommentObj = this.movieService.getCurrMovieObj;
   }
 
   addNewComment() {
@@ -74,13 +86,14 @@ export class UsersComponent implements OnInit {
       var dateObj = new Date();
 
       newCommentObj["user_id"] = this.currentLoggedInUser;
+      newCommentObj["name"] = this.currentLoggedInUser;
       newCommentObj["comment"] = this.userComment.commentBox;
       newCommentObj["comment_date"] = dateObj.getMonth() + "/" + dateObj.getDate() + "/" + dateObj.getFullYear();
       newCommentObj["user_rating"] = this.userComment.rating;
       newCommentObj["loggedIn"] = true; //To do from Service
-      this.currentMovieUserInfo = this.movieService.getcurrentMovieComments( undefined, newCommentObj );
+      // this.currentMovieUserInfo = this.movieService.getcurrentMovieComments( undefined, newCommentObj );
     }
-    this.commentForm.reset();
+    // this.commentForm.reset();
   }
 
 }

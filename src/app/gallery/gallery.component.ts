@@ -17,7 +17,7 @@ export class GalleryComponent implements OnInit {
   @Output() movieEventTriggered = new EventEmitter();
 
   ngOnInit() {
-    this.allMovies = this.movieService.getAllMovies();
+    // this.allMovies = this.movieService.getAllMovies();
     this.checkDomState();
   }
 
@@ -32,23 +32,40 @@ export class GalleryComponent implements OnInit {
   }
 
   showStarRatings() {
+    let self = this;
     const starTotal = 10;
     let ratings = {}, idx = 0;
-    for(let i in this.allMovies) {
-      ratings["movie_"+ idx] = this.allMovies[i].rating;
-      idx++;
-    }
+    // for(let i in this.allMovies) {
+    //   ratings["movie_"+ idx] = this.allMovies[i].rating;
+    //   idx++;
+    // }
 
-    for(let rating in ratings) {  
-      const starPercentage = (ratings[rating] / starTotal) * 100;
-      var starPercentageRounded = `${(Math.round(starPercentage / 10) * 10)}%`;
-      document.querySelector("."+ rating +" .stars-inner").setAttribute('style', 'width : '+starPercentageRounded+'');
-    }
+    // for(let rating in ratings) {  
+    //   const starPercentage = (ratings[rating] / starTotal) * 100;
+    //   var starPercentageRounded = `${(Math.round(starPercentage / 10) * 10)}%`;
+    //   document.querySelector("."+ rating +" .stars-inner").setAttribute('style', 'width : '+starPercentageRounded+'');
+    // }
+    this.movieService.getAllMovies( function( movieCollection ) {
+      self.allMovies = JSON.parse( movieCollection._body );
+      for(let i of self.allMovies) {
+        ratings[i._id] = i.IMDB;
+        idx++;
+      }
+      for(let rating in ratings) {
+        const starPercentage = (ratings[rating] / starTotal) * 100;
+        //Below line is for if rating is out of 5.
+        // var starPercentageRounded = `${(Math.round(starPercentage) / 10)}%`;
+        setTimeout(function() {
+          document.querySelector(".movie_"+ rating +" .stars-inner").setAttribute('style', 'width : '+starPercentage+'%');
+        }, 0);
+      }
+
+    })
   }
 
   selectMovie(val: string) {
-    let movieSelectedFromGallery = this.movieService.getSelectedMovieData( val );
-    this.movieEventTriggered.emit( movieSelectedFromGallery );
+    // let movieSelectedFromGallery = this.movieService.getSelectedMovieData( val, function(){  } );
+    // this.movieEventTriggered.emit( movieSelectedFromGallery,  );
   }
 
 }
