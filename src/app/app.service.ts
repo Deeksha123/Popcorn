@@ -58,7 +58,8 @@ export class MovieService{
     //   }
     // }
     // return this.currSelectedMovie;
-    this.http.get( "http://localhost:3000/player/:" + clipId ).subscribe(
+    console.log("this.currentLoggedInUser", this.currentLoggedInUser);
+    this.http.get( "http://localhost:3000/player/:" + clipId + "_" + this.currentLoggedInUser['_id'] ).subscribe(
       (data) => {
         this.currSelectedMovie = JSON.parse(data["_body"])[0];
         successHandler( this.currSelectedMovie );

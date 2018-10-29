@@ -29,11 +29,23 @@ var appRouter = function (app) {
             else{
                 res.status(200).send( docs );
 
-                //Set logged in user id in login collection.
+                //Set logged in user id in login collection object.
                 var newObj = {};
                 newObj.loggedInUser_Id = docs[0]._id;
-                var loginIdToUpdate = new credentialObj( newObj );
-                loginIdToUpdate.save();
+                credentialObj.find(function(err, result) {
+                    let oldLoggedInUser_Id = result[0].loggedInUser_Id;
+                    if(result.length == 0) {
+                        let loginIdToUpdate = new credentialObj( newObj );
+                        loginIdToUpdate.save();
+                    }
+                    else {
+                        console.log("Already existing document of login collection", result);
+                        credentialObj.update( {"loggedInUser_Id": oldLoggedInUser_Id}, newObj , function(err, docs) {
+                            //For future user, done something after updating login collection with new user 
+                        })
+                        
+                    }
+                });
             } 
         })
     });
@@ -50,22 +62,25 @@ var appRouter = function (app) {
     });
 
     app.get('/player/:uid', (req, res) => {
-        let tempArr = req.params.uid.split(':');
-        let id = tempArr[1];
-        movieCollection.find({ _id: id }, function(err, result) {
+        console.log("req.params.uid", req.params.uid);
+        let tempArr = req.params.uid.split("_");
+        let currLoginId = tempArr[1];
+        let currMovieId = tempArr[0].split(":")[1];
+        movieCollection.find({ _id: currMovieId }, function(err, result) {
             if(result == [] || result == undefined) 
                 res.status(404).send( "No movie found with this id in collection." );
-            else
+            else{
                 res.status(200).send( result );
-
-            //Set movie id selected from dashboard in login collection.
-            console.log("result", result);
-            // var obj = {};
-            credentialObj.find(function(err, eq) {
-                eq[0].selectedMovie_id = result[0]._id;
-                // eq.save();
-            });
-              
+                //Set movie id selected from dashboard in login collection.
+                var obj = {};
+                obj.loggedInUser_Id = currLoginId;
+                obj.selectedMovie_Id = currMovieId;
+                credentialObj.find(function(err, result) {
+                    credentialObj.update( {'loggedInUser_Id': currLoginId}, obj, function(err, doc) {
+                        // For future use.
+                    })
+                })
+            }
         })
     });
 
