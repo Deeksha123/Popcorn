@@ -50,16 +50,24 @@ export class MovieService{
     )
   }
 
+  updateOnloadData( successHandler ) {
+    this.http.get( "http://localhost:3000/login_user" ).subscribe(
+      (data) => {
+        this.currentLoggedInUser = JSON.parse(data["_body"])[0];
+        if(this.currentLoggedInUser["selectedMovie_Id"] != undefined) {
+          this.currSelectedClipId = this.currentLoggedInUser["selectedMovie_Id"];
+          successHandler( this.currSelectedClipId );
+        }
+      },
+      (err) => {
+        console.log("error in fetching logged in user id.", err);
+      }
+    )
+  }
+
   getSelectedMovieData( clipId, successHandler ) {
     this.currSelectedClipId = clipId;
-    // for(var id in this.allMovies) {
-    //   if(this.currSelectedClipId == this.allMovies[id].id) {
-    //     this.currSelectedMovie = this.allMovies[id];
-    //   }
-    // }
-    // return this.currSelectedMovie;
-    console.log("this.currentLoggedInUser", this.currentLoggedInUser);
-    this.http.get( "http://localhost:3000/player/:" + clipId + "_" + this.currentLoggedInUser['_id'] ).subscribe(
+    this.http.get( "http://localhost:3000/player/:" + clipId + "_" + this.currentLoggedInUser['loggedInUser_Id'] ).subscribe(
       (data) => {
         this.currSelectedMovie = JSON.parse(data["_body"])[0];
         successHandler( this.currSelectedMovie );
@@ -94,6 +102,7 @@ export class MovieService{
         console.log("Wrong Movie ID.")
       }
     )
+
   }
 
 }

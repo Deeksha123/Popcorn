@@ -33,17 +33,16 @@ var appRouter = function (app) {
                 var newObj = {};
                 newObj.loggedInUser_Id = docs[0]._id;
                 credentialObj.find(function(err, result) {
-                    let oldLoggedInUser_Id = result[0].loggedInUser_Id;
                     if(result.length == 0) {
                         let loginIdToUpdate = new credentialObj( newObj );
                         loginIdToUpdate.save();
                     }
                     else {
                         console.log("Already existing document of login collection", result);
+                        let oldLoggedInUser_Id = result[0].loggedInUser_Id;
                         credentialObj.update( {"loggedInUser_Id": oldLoggedInUser_Id}, newObj , function(err, docs) {
                             //For future user, done something after updating login collection with new user 
                         })
-                        
                     }
                 });
             } 
@@ -58,11 +57,9 @@ var appRouter = function (app) {
             else
                 res.status(200).send( result );
         });
-        
     });
 
     app.get('/player/:uid', (req, res) => {
-        console.log("req.params.uid", req.params.uid);
         let tempArr = req.params.uid.split("_");
         let currLoginId = tempArr[1];
         let currMovieId = tempArr[0].split(":")[1];
@@ -76,9 +73,18 @@ var appRouter = function (app) {
                 obj.loggedInUser_Id = currLoginId;
                 obj.selectedMovie_Id = currMovieId;
                 credentialObj.find(function(err, result) {
-                    credentialObj.update( {'loggedInUser_Id': currLoginId}, obj, function(err, doc) {
-                        // For future use.
-                    })
+                    if(result[0].selectedMovie_Id == undefined) {
+                        credentialObj.updateOne( {'loggedInUser_Id': currLoginId}, obj , function(err, doc) {
+                            // For future use.
+                        })
+                    } else {
+                        credentialObj.updateMany( {'loggedInUser_Id': currLoginId}, {
+                            'selectedMovie_Id' : currMovieId
+                        }, function(err, doc) {
+                            // For future use.
+                        })
+                    }
+                    
                 })
             }
         })
@@ -92,6 +98,15 @@ var appRouter = function (app) {
                 res.status(404).send( "Comments statck is null." );
             else
                 res.status(200).send( result );
+        })
+    });
+
+    app.get('/login_user', (req, res) => {
+        credentialObj.find(function(err, result) {
+            if(result == []) 
+                res.status(404).send("No user found");
+            else
+                res.status(200).send(result);
         })
     });
     

@@ -21,9 +21,9 @@ export class UsersComponent implements OnInit {
   currentMovieUserInfo = [];
   selectedMovie;
   newComment = "";
+  movieId= "";
   currentMovieUserComments = [];
 
-  //To do from service
   currentLoggedInUser = this.movieService.currentLoggedInUser;
   // paramsSub;
 
@@ -45,9 +45,6 @@ export class UsersComponent implements OnInit {
     //   }
       
     // });
-
-
-
   }
 
   ngOnInit() {
@@ -56,21 +53,29 @@ export class UsersComponent implements OnInit {
   }
 
   loadPage() {
-    
+    let self = this;
+    this.movieService.updateOnloadData(function( movieID ) {
+      self.movieId = movieID;
+      self.movieService.getSelectedMovieData( movieID  ,function( movieData ){
+        console.log("movieData", movieData)
+        self.selectedMovie = movieData;
+      });
+    });
   }
 
   getCurrentMovieCommentsData () {
     let self = this;
-    let movieId = this.movieService.currSelectedClipId;
-    this.selectedMovie = this.movieService.currSelectedMovie;
+    // let movieId = this.movieService.currSelectedClipId;
+    // this.selectedMovie = this.movieService.currSelectedMovie;
     // if(id == undefined) {
     //   currClipId = this.movieService.currSelectedMovie["id"];
     // } else {
     //   currClipId = id;
     // }
-    this.movieService.getcurrentMovieComments( movieId, undefined, function( commentObj ) {
-      
-      self.currentMovieUserInfo = commentObj.user_info;
+    this.movieService.getcurrentMovieComments( this.movieId, undefined, function( commentObj ) {
+      if(commentObj != undefined) 
+        self.currentMovieUserInfo = commentObj.user_info;
+      self.currentMovieUserInfo = [];
 
     });
     // this.currentClipCommentObj = this.movieService.getCurrMovieObj;
@@ -84,7 +89,6 @@ export class UsersComponent implements OnInit {
     }
     else {
       var dateObj = new Date();
-
       newCommentObj["user_id"] = this.currentLoggedInUser;
       newCommentObj["name"] = this.currentLoggedInUser;
       newCommentObj["comment"] = this.userComment.commentBox;

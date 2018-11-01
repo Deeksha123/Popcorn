@@ -25,10 +25,15 @@ export class DashboardComponent implements OnInit{
     let self = this;
     var stopCheckingState = setInterval(function() {
       if(document.readyState.toLowerCase() == "complete") {
-        self.showMovieGrid();
         clearInterval( stopCheckingState );
+        self.showMovieGrid();
+        self.updateSignInDetails();
       }
     }, 50);
+  }
+
+  updateSignInDetails() {
+    this.movieService.updateOnloadData(function(){ });
   }
 
   showMovieGrid() {
@@ -45,7 +50,7 @@ export class DashboardComponent implements OnInit{
       }
       for(let rating in ratings) {
         const starPercentage = (ratings[rating] / starTotal) * 100;
-        //Below line is for if rating is out of 5.
+        //Below line is for rating out of 5.
         // var starPercentageRounded = `${(Math.round(starPercentage) / 10)}%`;
         setTimeout(function() {
           document.querySelector(".movie_"+ rating +" .stars-inner").setAttribute('style', 'width : '+starPercentage+'%');
